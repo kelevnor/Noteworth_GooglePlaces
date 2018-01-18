@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:id="@+id/toolbar"
+    android:background="?attr/colorPrimary"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    android:contentInsetRight="0dp"
+    android:contentInsetEnd="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_filter"
+            android:layout_width="55dp"
+            android:text="@string/filter"
+
+            android:background="@drawable/toolbar_bg_selector"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_15"
+            android:gravity="center"
+            android:layout_height="45dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_rectangle"
+            android:layout_marginLeft="55dp"
+            android:orientation="horizontal"
+            android:layout_marginRight="55dp">
+
+
+            <TextView
+                android:id="@+id/tv_search_icon"
+                android:layout_width="30dp"
+                android:text="@string/fa_search"
+                android:textSize="@dimen/text_18"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/colorText555"
+                android:gravity="center"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:id="@+id/tv_search_parameter"
+                android:layout_width="25dp"
+                android:text="@string/fa_search"
+                android:textSize="@dimen/text_15"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/colorText555"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_height="25dp" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:text=""
+                android:hint="@string/entersearch"
+                android:textSize="@dimen/text_15"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/colorText555"
+                android:background="@color/colorTransparent"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_go"
+            android:layout_width="55dp"
+            android:text="@string/go"
+
+            android:background="@drawable/toolbar_bg_selector"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_15"
+            android:gravity="center"
+            android:layout_height="45dp" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

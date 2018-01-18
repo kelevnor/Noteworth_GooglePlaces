@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:id="@+id/toolbar_filter"
+    android:background="?attr/colorPrimary"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    android:contentInsetRight="0dp"
+    android:contentInsetEnd="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:text="@string/cancel"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:background="@drawable/toolbar_bg_selector"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_15"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+
+        <TextView
+            android:id="@+id/tv_filters"
+            android:layout_width="wrap_content"
+            android:text="@string/filters"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_18"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="wrap_content"
+            android:text="@string/str_search"
+            android:background="@drawable/toolbar_bg_selector"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_15"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

@@ -1,0 +1,46 @@
+<resources>
+
+    <string name="fa_location">&#xf124;</string>
+    <string name="fa_search">&#xf002;</string>
+    <string name="fa_plus">&#xf067;</string>
+    <string name="fa_activity">&#xf21e;</string>
+    <string name="fa_menu">&#xf0c9;</string>
+
+    <string name="fa_circle_empty">&#xf10c;</string>
+    <string name="fa_circle">&#xf058;</string>
+
+    <string name="location">Nearby</string>
+    <string name="str_search">Search</string>
+    <string name="plus"></string>
+    <string name="activity">Activity</string>
+    <string name="menu">More</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="filters">Filters</string>
+
+    <string name="entersearch">Enter Search</string>
+    <string name="generalfeatures">General Features</string>
+
+    <string name="takesreservations">Takes Reservations</string>
+    <string name="acceptscreditcards">Accepts Credit Cards</string>
+
+    <string name="filter">Filter</string>
+    <string name="go">Go</string>
+
+    <string name="app_name">Noteworth Google Places</string>
+    <string name="title_activity_main">Map</string>
+
+    <string name="permission_rationale_location">Access to the location service is required to demonstrate the \'my location\' feature, which shows your current location on the map.</string>
+    <string name="location_permission_denied">This sample requires location permission to enable the \'my location\' layer. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Google Maps API Demos\'.</string>
+    <string name="permission_required_toast">Location permission is required for this demo.</string>
+
+    <string name="hotandnew">Hot and New</string>
+    <string name="opennow">Open Now</string>
+    <string name="radius">Radius</string>
+
+    <string name="sortby">Sort By</string>
+    <string name="bestmatch">Best Match</string>
+    <string name="distance">Distance</string>
+    <string name="rating">Ratings</string>
+    <string name="reviews">Most Reviewed</string>
+</resources>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".MainActivity">
+
+    <include
+        layout="@layout/toolbar_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:background="@color/colorTextMedium"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@drawable/gradient_horizontal_view"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/colorTextMedium"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_navi"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bottom_bar_btn_selector"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_fa_navi"
+                    android:layout_width="match_parent"
+                    android:text="@string/fa_location"
+                    android:textSize="@dimen/fontawesome_text"
+                    android:textColor="@color/colorGreyMedium"
+                    android:gravity="center"
+                    android:layout_height="45dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_fa_navi_sub"
+                    android:layout_width="match_parent"
+                    android:text="@string/location"
+                    android:textColor="@color/colorGreyMedium"
+                    android:textSize="@dimen/fontawesome__sub_text"
+                    android:gravity="center_horizontal"
+                    android:layout_height="25dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bottom_bar_btn_selector"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_fa_search"
+                    android:layout_width="match_parent"
+                    android:text="@string/fa_search"
+                    android:textSize="@dimen/fontawesome_text"
+                    android:textColor="@color/colorGreyMedium"
+                    android:gravity="center"
+                    android:layout_height="45dp" />
+                <TextView
+                    android:id="@+id/tv_fa_search_sub"
+                    android:layout_width="match_parent"
+                    android:text="@string/str_search"
+                    android:textColor="@color/colorGreyMedium"
+                    android:textSize="@dimen/fontawesome__sub_text"
+                    android:gravity="center_horizontal"
+                    android:layout_height="25dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_plus"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bottom_bar_btn_selector"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_fa_plus"
+                    android:layout_width="match_parent"
+                    android:text="@string/fa_plus"
+                    android:textSize="@dimen/fontawesome_text"
+                    android:textColor="@color/colorGreyMedium"
+                    android:gravity="center"
+                    android:layout_height="70dp" />
+                <TextView
+                    android:id="@+id/tv_fa_plus_navi"
+                    android:layout_width="match_parent"
+                    android:text="@string/plus"
+                    android:textColor="@color/colorGreyMedium"
+                    android:textSize="@dimen/fontawesome__sub_text"
+                    android:gravity="center_horizontal"
+                    android:layout_height="0dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_activity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bottom_bar_btn_selector"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_fa_activity"
+                    android:layout_width="match_parent"
+                    android:text="@string/fa_activity"
+                    android:textSize="@dimen/fontawesome_text"
+                    android:textColor="@color/colorGreyMedium"
+                    android:gravity="center"
+                    android:layout_height="45dp" />
+                <TextView
+                    android:id="@+id/tv_fa_activity_sub"
+                    android:layout_width="match_parent"
+                    android:text="@string/activity"
+                    android:textColor="@color/colorGreyMedium"
+                    android:textSize="@dimen/fontawesome__sub_text"
+                    android:gravity="center_horizontal"
+                    android:layout_height="25dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_more"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bottom_bar_btn_selector"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_fa_menu"
+                    android:layout_width="match_parent"
+                    android:text="@string/fa_menu"
+                    android:textSize="@dimen/fontawesome_text"
+                    android:textColor="@color/colorGreyMedium"
+                    android:gravity="center"
+                    android:layout_height="45dp" />
+                <TextView
+                    android:id="@+id/tv_fa_menu_sub"
+                    android:layout_width="match_parent"
+                    android:text="@string/menu"
+                    android:textColor="@color/colorGreyMedium"
+                    android:textSize="@dimen/fontawesome__sub_text"
+                    android:gravity="center_horizontal"
+                    android:layout_height="25dp" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

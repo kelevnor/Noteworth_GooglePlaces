@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".FilterActivity">
+
+    <include
+        layout="@layout/toolbar_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+        <ScrollView
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_hotandnew"
+                        android:layout_width="wrap_content"
+                        android:text="@string/hotandnew"
+                        android:paddingLeft="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                    <Switch
+                        android:id="@+id/sw_hotandnew"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|right"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_opennow"
+                        android:layout_width="wrap_content"
+                        android:text="@string/opennow"
+                        android:paddingLeft="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                    <Switch
+                        android:id="@+id/sw_opennow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_vertical|right"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@color/colorTextMedium"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_radius"
+                        android:layout_width="wrap_content"
+                        android:text="@string/radius"
+                        android:paddingLeft="25dp"
+                        android:paddingTop="20dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="50dp" />
+
+                    <TextView
+                        android:id="@+id/tv_radiusnumber"
+                        android:layout_width="wrap_content"
+                        android:text="0 m"
+                        android:layout_alignParentRight="true"
+                        android:paddingRight="25dp"
+                        android:paddingTop="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="50dp" />
+
+                    <SeekBar
+                        android:id="@+id/sb_radius"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+
+                        android:max="500"
+                        android:layout_alignParentBottom="true"
+                        />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@color/colorTextMedium"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_sortby"
+                        android:layout_width="match_parent"
+                        android:text="@string/sortby"
+                        android:paddingLeft="25dp"
+                        android:paddingTop="20dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_bestmatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bottom_bar_btn_selector"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_bestmatch"
+                        android:layout_width="wrap_content"
+                        android:text="@string/bestmatch"
+                        android:paddingLeft="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_bestmatchcheck"
+                        android:layout_width="wrap_content"
+                        android:text="@string/fa_circle_empty"
+                        android:paddingRight="25dp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/text_18"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bottom_bar_btn_selector"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_distance"
+                        android:layout_width="wrap_content"
+                        android:text="@string/distance"
+                        android:paddingLeft="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_distancecheck"
+                        android:layout_width="wrap_content"
+                        android:text="@string/fa_circle_empty"
+                        android:paddingRight="25dp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/text_18"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bottom_bar_btn_selector"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_rating"
+                        android:layout_width="wrap_content"
+                        android:text="@string/rating"
+                        android:paddingLeft="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_ratingcheck"
+                        android:layout_width="wrap_content"
+                        android:text="@string/fa_circle_empty"
+                        android:paddingRight="25dp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/text_18"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_mostreviewed"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bottom_bar_btn_selector"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_mostreviewed"
+                        android:layout_width="wrap_content"
+                        android:text="@string/reviews"
+                        android:paddingLeft="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_mostreviewedcheck"
+                        android:layout_width="wrap_content"
+                        android:text="@string/fa_circle_empty"
+                        android:paddingRight="25dp"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/text_18"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@color/colorTextMedium"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_generalfeatures"
+                        android:layout_width="match_parent"
+                        android:text="@string/generalfeatures"
+                        android:paddingLeft="25dp"
+                        android:paddingTop="20dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_takesreservations"
+                        android:layout_width="wrap_content"
+                        android:text="@string/takesreservations"
+                        android:paddingLeft="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                    <Switch
+                        android:id="@+id/sw_takesreservations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_acceptscreditcards"
+                        android:layout_width="wrap_content"
+                        android:text="@string/acceptscreditcards"
+                        android:paddingLeft="25dp"
+                        android:textColor="@color/colorText555"
+                        android:textSize="@dimen/text_15"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent" />
+
+                    <Switch
+                        android:id="@+id/sw_acceptscreditcards"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/colorGreyMedium"/>
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_fa_navi_sub"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:text="@string/location"-->
+        <!--android:layout_marginTop="40dp"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:textColor="@color/colorGreyMedium"-->
+        <!--android:textSize="@dimen/fontawesome__sub_text"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:layout_height="25dp" />-->
+
+</RelativeLayout>
