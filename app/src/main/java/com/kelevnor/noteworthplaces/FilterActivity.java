@@ -2,6 +2,7 @@ package com.kelevnor.noteworthplaces;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -100,6 +101,8 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, resultIntent);
         finish();
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
     }
@@ -193,6 +196,8 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
         switch (view.getId()){
             case R.id.tv_cancel:
+                Intent cancelInt = new Intent();
+                setResult(Activity.RESULT_CANCELED, cancelInt);
                 finish();
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                 break;
@@ -203,6 +208,8 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                 MainActivity.userPreferences.setPickedRadius((double)radiusseek.getProgress());
                 Utility.saveStateInSharedPreferences(getApplicationContext(), MainActivity.userPreferences);
 
+                Intent searchInt = new Intent();
+                setResult(Activity.RESULT_OK, searchInt);
                 finish();
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                 break;

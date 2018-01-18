@@ -12,14 +12,18 @@ import java.net.URL;
 
 /**
  * Created by kelevnor on 1/16/18.
+ * For this version the search is limited to restaurant|bar|cafe these types
+ * We can set in the filters the user to be able to add the types they want
  */
 
 public class REST_getGooglePlaces extends AsyncTask<Void, Integer, Void> {
 
+
     boolean completedCall = false;
     private static final String URI_PLACES = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
     private static final String URI_PAR_1 = "&radius=";
-    private static final String URI_PAR_2 = "&type=restaurant";
+    private static final String URI_PAR_2 = "&type=restaurant|bar|cafe";
+
     private static final String URI_PAR_3 = "&keyword=cruise";
     private static final String URI_PAR_4 = "&key=";
 

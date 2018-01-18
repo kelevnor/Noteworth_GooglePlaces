@@ -1,8 +1,11 @@
 package com.kelevnor.noteworthplaces.Adapters;
 
+import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kelevnor.noteworthplaces.Models.places.Result;
@@ -16,23 +19,31 @@ import java.util.List;
 
 public class Adapter_PlacesItem extends RecyclerView.Adapter<Adapter_PlacesItem.ViewHolder> {
     private List<Result> searchList;
-
+    Typeface fontAwesome, openSansRegular, openSansSemiBold;
+    Activity act;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTextView;
+        public RelativeLayout layout;
+        public TextView textName;
+        public TextView textRating;
+        public TextView textPrice;
 
-        public ViewHolder(TextView v) {
+        public ViewHolder(RelativeLayout v) {
             super(v);
-            mTextView = v;
+            layout = v;
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public Adapter_PlacesItem(List<Result> searchList) {
+    public Adapter_PlacesItem(Activity act, List<Result> searchList) {
         this.searchList = searchList;
+        this.act = act;
+        fontAwesome = Typeface.createFromAsset(act.getAssets(),"fonts/fontawesome-webfont.ttf");
+        openSansRegular = Typeface.createFromAsset(act.getAssets(),"fonts/Open_Sans_Regular.ttf");
+        openSansSemiBold = Typeface.createFromAsset(act.getAssets(),"fonts/Open_Sans_SemiBold.ttf");
     }
 
     // Create new views (invoked by the layout manager)
@@ -40,11 +51,16 @@ public class Adapter_PlacesItem extends RecyclerView.Adapter<Adapter_PlacesItem.
     public Adapter_PlacesItem.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.textview, parent, false);
-
-
+        RelativeLayout v = (RelativeLayout) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item_search, parent, false);
         ViewHolder vh = new ViewHolder(v);
+        vh.textName = v.findViewById(R.id.tv_name);
+        vh.textRating = v.findViewById(R.id.tv_rating);
+        vh.textPrice = v.findViewById(R.id.tv_price);
+
+        vh.textName.setTypeface(openSansSemiBold);
+        vh.textRating.setTypeface(fontAwesome);
+        vh.textPrice.setTypeface(openSansSemiBold);
         return vh;
     }
 
@@ -53,7 +69,9 @@ public class Adapter_PlacesItem extends RecyclerView.Adapter<Adapter_PlacesItem.
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTextView.setText(searchList.get(position).getName());
+        holder.textName.setText(searchList.get(position).getName());
+        holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star));
+
 
     }
 

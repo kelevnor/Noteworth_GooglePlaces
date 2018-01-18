@@ -9,6 +9,10 @@
     <string name="fa_circle_empty">&#xf10c;</string>
     <string name="fa_circle">&#xf058;</string>
 
+    <string name="fa_half_star">&#xf123;</string>
+    <string name="fa_star">&#xf005;</string>
+    <string name="fa_empty_star">&#xf006;</string>
+
     <string name="location">Nearby</string>
     <string name="str_search">Search</string>
     <string name="plus"></string>

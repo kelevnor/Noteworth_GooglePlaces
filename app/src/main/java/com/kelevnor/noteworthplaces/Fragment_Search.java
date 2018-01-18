@@ -36,7 +36,7 @@ public class Fragment_Search extends Fragment implements View.OnClickListener{
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new Adapter_PlacesItem(MainActivity.placesResponse.getResults());
+        mAdapter = new Adapter_PlacesItem(getActivity(), MainActivity.placesResponse.getResults());
         mRecyclerView.setAdapter(mAdapter);
         return v;
     }

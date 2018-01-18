@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:id="@+id/toolbar_filter"
+    android:background="@color/colorWhite"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp"
+    android:contentInsetRight="0dp"
+    android:contentInsetEnd="0dp"
+    app:contentInsetRight="0dp"
+    app:contentInsetEnd="0dp">
+
+
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:text="@string/cancel"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/toolbar_bg_selector"
+            android:textColor="@color/colorText555"
+            android:textSize="@dimen/text_15"
+            android:gravity="center_vertical"
+            android:layout_height="25dp" />
+
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:text="@string/filters"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/orangestar"
+            android:textSize="@dimen/text_18"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:text="$$$"
+
+            android:background="@drawable/toolbar_bg_selector"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorGreyMediumDarker"
+            android:textSize="@dimen/text_15"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorGreyMedium"/>
+</RelativeLayout>

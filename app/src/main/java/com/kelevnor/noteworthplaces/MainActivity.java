@@ -1,6 +1,8 @@
 package com.kelevnor.noteworthplaces;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -9,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -19,14 +22,18 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.gson.Gson;
+import com.kelevnor.noteworthplaces.Adapters.Adapter_PlacesItem;
 import com.kelevnor.noteworthplaces.Models.UserPreferences;
 import com.kelevnor.noteworthplaces.Models.places.PlacesObject;
 import com.kelevnor.noteworthplaces.Rest.REST_getGooglePlaces;
 import com.kelevnor.noteworthplaces.Utility.PermissionUtils;
 import com.kelevnor.noteworthplaces.Utility.Utility;
 
+import okhttp3.internal.Util;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private int TYPE_FILTER = 112;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int BUNDLE_PERMISSION_REQUEST_CODE = 1;
     private GoogleMap mMap;
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static PlacesObject placesResponse;
     public static UserPreferences userPreferences;
 
+    RecyclerView RVSearchFragment;
 
     Toolbar toolbar;
     Typeface fontAwesome, openSansRegular;
@@ -41,9 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     LinearLayout navigationLL, searchLL, plusLL, activityLL, moreLL;
 
+
     TextView filter, go, searchFontIcon;
     EditText searchEt;
-
+    Fragment_Navigation naviFragment;
+    Fragment_Search searchFragment;
     android.support.v4.app.FragmentManager mFragmentManager;
     android.support.v4.app.FragmentTransaction mFragmentTransaction;
     @Override
@@ -108,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.tv_filter:
                 Intent i = new Intent(this, FilterActivity.class);
-                startActivity(i);
+                startActivityForResult(i,TYPE_FILTER);
                 overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
                 break;
             case R.id.ll_navi:
@@ -118,9 +128,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Utility.unSelectView(this, activity, activitySub);
                 Utility.unSelectView(this, menu, menuSub);
 
-
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.frame,new Fragment_Navigation()).commit();
+                setFragment(Utility.navi_alias);
+//                mFragmentTransaction = mFragmentManager.beginTransaction();
+//                mFragmentTransaction.replace(R.id.frame, new Fragment_Navigation(), Utility.navi_alias).commit();
                 break;
 
             case R.id.ll_search:
@@ -129,8 +139,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Utility.setSelectedView(this, search, searchSub);
                 Utility.unSelectView(this, activity, activitySub);
                 Utility.unSelectView(this, menu, menuSub);
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.frame,new Fragment_Search()).commit();
+                setFragment(Utility.search_alias);
+//                mFragmentTransaction = mFragmentManager.beginTransaction();
+//                mFragmentTransaction.replace(R.id.frame, new Fragment_Search(), Utility.search_alias).commit();
                 break;
 
             case R.id.ll_plus:
@@ -153,6 +164,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == TYPE_FILTER){
+            if(resultCode == Activity.RESULT_OK){
+
+                Location userLocation = Utility.getUserLocation(this);
+
+                //Cannot get hold of device's Location
+                if(userLocation.getLatitude()==0.0&&userLocation.getLongitude()==0.0){
+
+                }
+                //Device has Location
+                else{
+                    //Retrieve data if internet established
+                    if(Utility.checkInternetAvailability(this)){
+                        REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, userLocation.getLatitude(), userLocation.getLongitude(), userPreferences.getPickedRadius());
+                        places.setOnResultListener(asynResultPlaces);
+                        places.execute();
+                    }
+                    //No Internet, inform user appropriately
+                    else{
+
+                    }
+                }
+            }
+            else{
+
+            }
+        }
+    }
+
     private void setViews(){
         fontAwesome = Typeface.createFromAsset(getAssets(),"fonts/fontawesome-webfont.ttf");
         openSansRegular = Typeface.createFromAsset(getAssets(),"fonts/Open_Sans_Regular.ttf");
@@ -207,6 +251,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void setFragment(){
+        naviFragment = (Fragment_Navigation) getSupportFragmentManager().findFragmentByTag(Utility.navi_alias);
+        searchFragment = (Fragment_Search) getSupportFragmentManager().findFragmentByTag(Utility.search_alias);
+        if (naviFragment != null && naviFragment.isVisible()) {
+            // add your code here
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.frame,naviFragment).commit();
+        }
+        else if (searchFragment != null && searchFragment.isVisible()) {
+            // add your code here
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.frame,searchFragment).commit();
+            RVSearchFragment = findViewById(R.id.my_recycler_view);
+//            RVSearchFragment.setAdapter(null);
+            RVSearchFragment.setAdapter(new Adapter_PlacesItem(MainActivity.this,placesResponse.getResults()));
+        }
+        else{
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.frame,new Fragment_Search(), Utility.search_alias).commit();
+        }
+    }
+
+    private void setFragment(String type){
+        if(type.equals(Utility.navi_alias)){
+            naviFragment = (Fragment_Navigation) getSupportFragmentManager().findFragmentByTag(Utility.navi_alias);
+            if (naviFragment != null && naviFragment.isVisible()) {
+                // add your code here
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.frame,naviFragment).commit();
+            }
+            else{
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.frame,new Fragment_Navigation(), Utility.navi_alias).commit();
+            }
+        }
+        else if(type.equals(Utility.search_alias)){
+            searchFragment = (Fragment_Search) getSupportFragmentManager().findFragmentByTag(Utility.search_alias);
+            if (searchFragment != null && searchFragment.isVisible()) {
+                // add your code here
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.frame,searchFragment).commit();
+
+                RVSearchFragment = findViewById(R.id.my_recycler_view);
+                RVSearchFragment.setAdapter(new Adapter_PlacesItem(MainActivity.this,placesResponse.getResults()));
+            }
+            else{
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.frame,new Fragment_Search(), Utility.search_alias).commit();
+            }
+        }
+    }
+
     REST_getGooglePlaces.OnAsyncResult asynResultPlaces = new REST_getGooglePlaces.OnAsyncResult() {
         @Override
         public void onResultSuccess(int resultCode, String result) {
@@ -214,10 +317,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Gson gson = new Gson();
             placesResponse = new PlacesObject();
             placesResponse = gson.fromJson(result, PlacesObject.class);
+            setFragment();
 
-            mFragmentManager = getSupportFragmentManager();
-            mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.frame,new Fragment_Search()).commit();
+
 
             Log.e("size", String.valueOf(placesResponse.getResults().size()));
         }
