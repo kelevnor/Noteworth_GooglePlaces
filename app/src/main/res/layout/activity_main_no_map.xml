@@ -110,15 +110,15 @@
                 <TextView
                     android:id="@+id/tv_fa_activity"
                     android:layout_width="match_parent"
-                    android:text="@string/fa_activity"
-                    android:textSize="@dimen/fontawesome_text"
+                    android:text="@string/fa_user_location"
+                    android:textSize="34dp"
                     android:textColor="@color/colorGreyMedium"
                     android:gravity="center"
                     android:layout_height="45dp" />
                 <TextView
                     android:id="@+id/tv_fa_activity_sub"
                     android:layout_width="match_parent"
-                    android:text="@string/activity"
+                    android:text="@string/user_location"
                     android:textColor="@color/colorGreyMedium"
                     android:textSize="@dimen/fontawesome__sub_text"
                     android:gravity="center_horizontal"

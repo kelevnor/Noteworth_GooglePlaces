@@ -57,9 +57,9 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            PermissionUtils.requestPemissions(FilterActivity.this, BUNDLE_PERMISSION_REQUEST_CODE);
-        }
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            PermissionUtils.requestPemissions(FilterActivity.this, BUNDLE_PERMISSION_REQUEST_CODE);
+//        }
 
         setViews();
 

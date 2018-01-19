@@ -4,6 +4,7 @@
     <string name="fa_search">&#xf002;</string>
     <string name="fa_plus">&#xf067;</string>
     <string name="fa_activity">&#xf21e;</string>
+    <string name="fa_user_location">&#xf276;</string>
     <string name="fa_menu">&#xf0c9;</string>
 
     <string name="fa_circle_empty">&#xf10c;</string>
@@ -16,6 +17,7 @@
     <string name="location">Nearby</string>
     <string name="str_search">Search</string>
     <string name="plus"></string>
+    <string name="user_location">User</string>
     <string name="activity">Activity</string>
     <string name="menu">More</string>
 

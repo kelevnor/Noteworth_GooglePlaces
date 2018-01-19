@@ -119,9 +119,6 @@ public class Utility {
                 loc = lt.getPossiblyStaleLocation();
                 Log.e("STALE lt LAT/LONG", String.valueOf(loc.getLatitude()) + " / " + String.valueOf(loc.getLongitude()));
             } else {
-                loc = new Location("");
-                loc.setLatitude(0.0);
-                loc.setLongitude(0.0);
                 Log.e("STALE lt LAT/LONG", "ERR");
             }
         }

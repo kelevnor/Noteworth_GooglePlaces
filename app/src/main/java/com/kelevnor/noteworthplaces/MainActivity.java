@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -68,34 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main_no_map);
 
         if (Build.VERSION.SDK_INT >= 23) {
-            PermissionUtils.requestPemissions(MainActivity.this, BUNDLE_PERMISSION_REQUEST_CODE);
+            enableMyLocation();
+//            PermissionUtils.requestPemissions(MainActivity.this, BUNDLE_PERMISSION_REQUEST_CODE);
         }
 
         userPreferences = Utility.getStateFromSharedPreferences(getApplicationContext());
-
-        Location userLocation = Utility.getUserLocation(this);
-
-        //Cannot get hold of device's Location
-        if(userLocation.getLatitude()==0.0&&userLocation.getLongitude()==0.0){
-
-        }
-        //Device has Location
-        else{
-
-            Utility.preferredLatitude = userLocation.getLatitude();
-            Utility.preferredLongitude = userLocation.getLongitude();
-
-            //Retrieve data if internet established
-            if(Utility.checkInternetAvailability(this)){
-                REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, userLocation.getLatitude(), userLocation.getLongitude(), userPreferences.getPickedRadius());
-                places.setOnResultListener(asynResultPlaces);
-                places.execute();
-            }
-            //No Internet, inform user appropriately
-            else{
-
-            }
-        }
 
 
 
@@ -114,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission to access the location is missing.
-            PermissionUtils.requestPermission(MainActivity.this, LOCATION_PERMISSION_REQUEST_CODE,
+            PermissionUtils.requestPermission(MainActivity.this, BUNDLE_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
@@ -159,17 +137,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.ll_activity:
-                Utility.unSelectView(this, navi, naviSub);
-                Utility.unSelectView(this, search, searchSub);
-                Utility.setSelectedView(this, activity, activitySub);
-                Utility.unSelectView(this, menu, menuSub);
+
+                searchEt.setText("");
+                Toast.makeText(this, "User Location Selected", Toast.LENGTH_SHORT).show();
+
+                Location userLocation = Utility.getUserLocation(this);
+
+                //Cannot get hold of device's Location
+                if(userLocation.getLatitude()==0.0&&userLocation.getLongitude()==0.0){
+                }
+                //Device has Location
+                else{
+
+                    Utility.preferredLatitude = userLocation.getLatitude();
+                    Utility.preferredLongitude = userLocation.getLongitude();
+
+                    //Retrieve data if internet established
+                    if(Utility.checkInternetAvailability(this)){
+                        REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
+                        places.setOnResultListener(asynResultPlaces);
+                        places.execute();
+                    }
+                    //No Internet, inform user appropriately
+                    else{
+
+                    }
+                }
                 break;
 
             case R.id.ll_more:
-                Utility.unSelectView(this, navi, naviSub);
-                Utility.unSelectView(this, search, searchSub);
-                Utility.unSelectView(this, activity, activitySub);
-                Utility.setSelectedView(this, menu, menuSub);
+//                Utility.unSelectView(this, navi, naviSub);
+//                Utility.unSelectView(this, search, searchSub);
+//                Utility.unSelectView(this, activity, activitySub);
+//                Utility.setSelectedView(this, menu, menuSub);
                 break;
 
             case R.id.et_search:
@@ -198,15 +198,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == TYPE_FILTER){
             if(resultCode == Activity.RESULT_OK){
+                //Retrieve data if internet established
+                if(Utility.checkInternetAvailability(this)){
+                    REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
+                    places.setOnResultListener(asynResultPlaces);
+                    places.execute();
+                }
+                //No Internet, inform user appropriately
+                else{
+
+                }
+            }
+            else{
+
+            }
+        }
+        else if(requestCode == TYPE_AUTOCOMPLETE){
+            if(resultCode == Activity.RESULT_OK){
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                LatLng placeLatLng = place.getLatLng();
+                Log.e("Picked Place", "Place: " + place.getAddress());
+                Log.e("Picked_Lat", "Place: " + String.valueOf(placeLatLng.latitude));
+                Log.e("Picked_Long", "Place: " + String.valueOf(placeLatLng.longitude));
+
+                Utility.preferredLatitude = placeLatLng.latitude;
+                Utility.preferredLongitude = placeLatLng.longitude;
+
+                searchEt.setText(place.getAddress());
+
+                //Retrieve data if internet established
+                if(Utility.checkInternetAvailability(this)){
+                    REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
+                    places.setOnResultListener(asynResultPlaces);
+                    places.execute();
+                }
+                //No Internet, inform user appropriately
+                else{
+
+                }
+            }
+
+
+        }
+        else if(requestCode==BUNDLE_PERMISSION_REQUEST_CODE){
+
+            if(resultCode == Activity.RESULT_OK){
+
+                setFragment(Utility.search_alias);
 
                 Location userLocation = Utility.getUserLocation(this);
 
                 //Cannot get hold of device's Location
                 if(userLocation.getLatitude()==0.0&&userLocation.getLongitude()==0.0){
-
                 }
                 //Device has Location
                 else{
+
+                    Utility.preferredLatitude = userLocation.getLatitude();
+                    Utility.preferredLongitude = userLocation.getLongitude();
+
                     //Retrieve data if internet established
                     if(Utility.checkInternetAvailability(this)){
                         REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
@@ -219,29 +269,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             }
-            else{
-
-            }
-        }
-        else if(requestCode == TYPE_AUTOCOMPLETE){
-            Place place = PlaceAutocomplete.getPlace(this, data);
-            LatLng placeLatLng = place.getLatLng();
-            Log.e("Picked Place", "Place: " + place.getAddress());
-            Log.e("Picked_Lat", "Place: " + String.valueOf(placeLatLng.latitude));
-            Log.e("Picked_Long", "Place: " + String.valueOf(placeLatLng.longitude));
-
-            Utility.preferredLatitude = placeLatLng.latitude;
-            Utility.preferredLongitude = placeLatLng.longitude;
-
-            searchEt.setText(place.getAddress());
-
-            //Retrieve data if internet established
-            if(Utility.checkInternetAvailability(this)){
-                REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
-                places.setOnResultListener(asynResultPlaces);
-                places.execute();
-            }
-            //No Internet, inform user appropriately
             else{
 
             }
@@ -366,9 +393,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     RVSearchFragment.setVisibility(View.VISIBLE);
                     RVSearchFragment.setAdapter(new Adapter_PlacesItem(MainActivity.this,placesResponse.getResults()));
                 }
-
-                RVSearchFragment = findViewById(R.id.my_recycler_view);
-                RVSearchFragment.setAdapter(new Adapter_PlacesItem(MainActivity.this,placesResponse.getResults()));
             }
             else{
                 mFragmentManager = getSupportFragmentManager();
