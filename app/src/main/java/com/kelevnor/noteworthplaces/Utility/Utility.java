@@ -28,6 +28,9 @@ import java.net.HttpURLConnection;
 
 public class Utility {
 
+    public static Double preferredLatitude = 0.0;
+    public static Double preferredLongitude = 0.0;
+
     public static String navi_alias = "navi";
     public static String search_alias = "search";
     public static String plus_alias = "plus";

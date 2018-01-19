@@ -47,4 +47,7 @@
     <string name="distance">Distance</string>
     <string name="rating">Ratings</string>
     <string name="reviews">Most Reviewed</string>
+
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
 </resources>

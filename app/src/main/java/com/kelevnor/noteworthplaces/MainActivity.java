@@ -20,7 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.kelevnor.noteworthplaces.Adapters.Adapter_PlacesItem;
 import com.kelevnor.noteworthplaces.Models.UserPreferences;
@@ -33,6 +38,7 @@ import okhttp3.internal.Util;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private int TYPE_AUTOCOMPLETE = 111;
     private int TYPE_FILTER = 112;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int BUNDLE_PERMISSION_REQUEST_CODE = 1;
@@ -75,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //Device has Location
         else{
+
+            Utility.preferredLatitude = userLocation.getLatitude();
+            Utility.preferredLongitude = userLocation.getLongitude();
+
             //Retrieve data if internet established
             if(Utility.checkInternetAvailability(this)){
                 REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, userLocation.getLatitude(), userLocation.getLongitude(), userPreferences.getPickedRadius());
@@ -161,6 +171,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Utility.unSelectView(this, activity, activitySub);
                 Utility.setSelectedView(this, menu, menuSub);
                 break;
+
+            case R.id.et_search:
+
+                try {
+                    Intent intent;
+                    intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                            .build(this);
+                    startActivityForResult(intent, TYPE_AUTOCOMPLETE);
+                } catch (GooglePlayServicesRepairableException e) {
+                    // TODO: Handle the error.
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    // TODO: Handle the error.
+                    e.printStackTrace();
+                }
+
+                break;
+
         }
 
     }
@@ -181,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 else{
                     //Retrieve data if internet established
                     if(Utility.checkInternetAvailability(this)){
-                        REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, userLocation.getLatitude(), userLocation.getLongitude(), userPreferences.getPickedRadius());
+                        REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
                         places.setOnResultListener(asynResultPlaces);
                         places.execute();
                     }
@@ -194,6 +222,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else{
 
             }
+        }
+        else if(requestCode == TYPE_AUTOCOMPLETE){
+            Place place = PlaceAutocomplete.getPlace(this, data);
+            LatLng placeLatLng = place.getLatLng();
+            Log.e("Picked Place", "Place: " + place.getAddress());
+            Log.e("Picked_Lat", "Place: " + String.valueOf(placeLatLng.latitude));
+            Log.e("Picked_Long", "Place: " + String.valueOf(placeLatLng.longitude));
+
+            Utility.preferredLatitude = placeLatLng.latitude;
+            Utility.preferredLongitude = placeLatLng.longitude;
+
+            searchEt.setText(place.getAddress());
+
+            //Retrieve data if internet established
+            if(Utility.checkInternetAvailability(this)){
+                REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
+                places.setOnResultListener(asynResultPlaces);
+                places.execute();
+            }
+            //No Internet, inform user appropriately
+            else{
+
+            }
+
         }
     }
 
@@ -242,6 +294,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         filter.setTypeface(openSansRegular);
         searchEt.setTypeface(openSansRegular);
 
+        searchEt.setOnClickListener(this);
         navigationLL.setOnClickListener(this);
         searchLL.setOnClickListener(this);
         plusLL.setOnClickListener(this);
@@ -266,8 +319,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mFragmentTransaction = mFragmentManager.beginTransaction();
             mFragmentTransaction.replace(R.id.frame,searchFragment).commit();
             RVSearchFragment = findViewById(R.id.my_recycler_view);
-//            RVSearchFragment.setAdapter(null);
-            RVSearchFragment.setAdapter(new Adapter_PlacesItem(MainActivity.this,placesResponse.getResults()));
+
+            if(placesResponse.getResults().size()==0){
+                RVSearchFragment.setVisibility(View.GONE);
+            }
+            else{
+                RVSearchFragment.setVisibility(View.VISIBLE);
+                RVSearchFragment.setAdapter(new Adapter_PlacesItem(MainActivity.this,placesResponse.getResults()));
+            }
         }
         else{
             mFragmentManager = getSupportFragmentManager();
@@ -298,6 +357,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.frame,searchFragment).commit();
+                RVSearchFragment = findViewById(R.id.my_recycler_view);
+                if(placesResponse.getResults().size()==0){
+                    RVSearchFragment.setVisibility(View.GONE);
+                }
+                else{
+
+                    RVSearchFragment.setVisibility(View.VISIBLE);
+                    RVSearchFragment.setAdapter(new Adapter_PlacesItem(MainActivity.this,placesResponse.getResults()));
+                }
 
                 RVSearchFragment = findViewById(R.id.my_recycler_view);
                 RVSearchFragment.setAdapter(new Adapter_PlacesItem(MainActivity.this,placesResponse.getResults()));

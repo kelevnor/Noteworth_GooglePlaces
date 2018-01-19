@@ -30,6 +30,7 @@ public class Adapter_PlacesItem extends RecyclerView.Adapter<Adapter_PlacesItem.
         public TextView textName;
         public TextView textRating;
         public TextView textPrice;
+        public TextView textOpenNow;
 
         public ViewHolder(RelativeLayout v) {
             super(v);
@@ -57,6 +58,7 @@ public class Adapter_PlacesItem extends RecyclerView.Adapter<Adapter_PlacesItem.
         vh.textName = v.findViewById(R.id.tv_name);
         vh.textRating = v.findViewById(R.id.tv_rating);
         vh.textPrice = v.findViewById(R.id.tv_price);
+        vh.textOpenNow = v.findViewById(R.id.tv_price);
 
         vh.textName.setTypeface(openSansSemiBold);
         vh.textRating.setTypeface(fontAwesome);

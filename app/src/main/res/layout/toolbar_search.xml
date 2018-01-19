@@ -69,6 +69,12 @@
                 android:text=""
                 android:hint="@string/entersearch"
                 android:textSize="@dimen/text_15"
+
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:maxLines="1"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/colorText555"
                 android:background="@color/colorTransparent"
