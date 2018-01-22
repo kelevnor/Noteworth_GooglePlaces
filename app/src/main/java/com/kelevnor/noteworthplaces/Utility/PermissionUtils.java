@@ -36,7 +36,7 @@ import com.kelevnor.noteworthplaces.R;
  */
 public abstract class PermissionUtils {
 
-    static String[] REQUIRED_PERMISSIONS = {android.Manifest.permission.INTERNET, android.Manifest.permission.ACCESS_NETWORK_STATE, android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION,android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE};
+    static String[] REQUIRED_PERMISSIONS = {android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION};
 
     /**
      * Requests the fine location permission. If a rationale with an additional explanation should

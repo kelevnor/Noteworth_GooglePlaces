@@ -6,10 +6,6 @@
     android:background="@color/colorWhite"
     tools:context=".MainActivity">
 
-
-
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="71dp"
@@ -148,9 +144,6 @@
                     android:gravity="center_horizontal"
                     android:layout_height="25dp" />
             </LinearLayout>
-
-
-
         </LinearLayout>
     </LinearLayout>
     <include
@@ -163,6 +156,39 @@
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="71dp"/>
+        android:layout_marginBottom="71dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:paddingBottom="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_fa_applogo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="@string/fa_location_arrow"
+                android:background="@drawable/circle_red_logo"
+                android:textSize="@dimen/fontawesome_text"
+                android:textColor="@color/colorWhite"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"/>
+        </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_applogo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:text="@string/welcomemessage"
+                android:textColor="@color/colorGreyMediumDarker"
+                android:textSize="@dimen/text_15"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+    </FrameLayout>
 
 </RelativeLayout>

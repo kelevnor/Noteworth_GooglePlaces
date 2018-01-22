@@ -25,7 +25,9 @@ public class REST_getGooglePlaces extends AsyncTask<Void, Integer, Void> {
     private static final String URI_PAR_2 = "&type=restaurant|bar|cafe";
 
     private static final String URI_PAR_3 = "&keyword=cruise";
-    private static final String URI_PAR_4 = "&key=";
+    private static final String URI_PAR_4 = "&rankby=";
+    private static final String URI_PAR_5 = "&key=";
+
 
     String response_passed = "";
 
@@ -33,14 +35,16 @@ public class REST_getGooglePlaces extends AsyncTask<Void, Integer, Void> {
     double latitude;
     double longitude;
     double radius;
+    String rankBy;
 
     OnAsyncResult onAsyncResult;
 
-    public REST_getGooglePlaces(Activity act, double latitude, double longitude, double radius){
+    public REST_getGooglePlaces(Activity act, double latitude, double longitude, double radius, String rankBy){
         this.act= act;
         this.latitude = latitude;
         this.longitude = longitude;
         this.radius = radius;
+        this.rankBy = rankBy;
 
     }
     public void setOnResultListener(OnAsyncResult onAsyncResult) {
@@ -49,26 +53,16 @@ public class REST_getGooglePlaces extends AsyncTask<Void, Integer, Void> {
         }
     }
 
-    private String createBaseUrl(){
-        Log.d("BASE_URI",URI_PLACES+String.valueOf(latitude)+","+String.valueOf(longitude)
-                +URI_PAR_1
-                + String.valueOf(radius)
-                +URI_PAR_2+URI_PAR_3+URI_PAR_4+act.getResources().getString(R.string.google_maps_key));
-        return URI_PLACES+String.valueOf(latitude)+","+String.valueOf(longitude)
-                +URI_PAR_1
-                + String.valueOf(radius)
-                +URI_PAR_2+URI_PAR_3+URI_PAR_4+act.getResources().getString(R.string.google_maps_key);
-    }
+
 
     @Override
     protected Void doInBackground(Void... voids) {
-        Log.e("url", createBaseUrl());
+        Log.e("url", createBaseUrl(rankBy));
         try {
-            URL url = new URL(createBaseUrl());
+            URL url = new URL(createBaseUrl(rankBy));
             HttpURLConnection urlConnection;
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestProperty("Content-Type", "application/json");
-
 
             if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 response_passed = Utility.GETurlConnectionInputStream(urlConnection);
@@ -101,5 +95,20 @@ public class REST_getGooglePlaces extends AsyncTask<Void, Integer, Void> {
     public interface OnAsyncResult {
         void onResultSuccess(int resultCode, String message);
         void onResultFail(int resultCode, String errorMessage);
+    }
+
+    private String createBaseUrl(String rankBy){
+        if(rankBy.equals(Utility.best_match_alias)){
+            return URI_PLACES+String.valueOf(latitude)+","+String.valueOf(longitude)
+                    +URI_PAR_1
+                    + String.valueOf(radius)
+                    +URI_PAR_2+URI_PAR_5+act.getResources().getString(R.string.google_maps_key);
+        }
+        else{
+            return URI_PLACES+String.valueOf(latitude)+","+String.valueOf(longitude)
+                    +URI_PAR_1
+                    + String.valueOf(radius)
+                    +URI_PAR_2+URI_PAR_4+rankBy+URI_PAR_5+act.getResources().getString(R.string.google_maps_key);
+        }
     }
 }

@@ -66,7 +66,7 @@ public class Fragment_Search extends Fragment implements View.OnClickListener{
 
                 //Retrieve data if internet established
                 if(Utility.checkInternetAvailability(getActivity())){
-                    REST_getGooglePlaces places = new REST_getGooglePlaces(getActivity(), Utility.preferredLatitude, Utility.preferredLongitude, MainActivity.userPreferences.getPickedRadius());
+                    REST_getGooglePlaces places = new REST_getGooglePlaces(getActivity(), Utility.preferredLatitude, Utility.preferredLongitude, MainActivity.userPreferences.getPickedRadius(), MainActivity.userPreferences.getSortBy());
                     places.setOnResultListener(asynResultPlaces);
                     places.execute();
                 }

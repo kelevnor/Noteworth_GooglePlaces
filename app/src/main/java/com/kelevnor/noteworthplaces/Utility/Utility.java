@@ -156,7 +156,7 @@ public class Utility {
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(user);
-        prefsEditor.putString("state", json);
+        prefsEditor.putString(con.getResources().getString(R.string.user_preferences), json);
         prefsEditor.commit();
     }
 
@@ -164,7 +164,7 @@ public class Utility {
         SharedPreferences appSharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(con);
         Gson gson = new Gson();
-        String json = appSharedPrefs.getString("state", "");
+        String json = appSharedPrefs.getString(con.getResources().getString(R.string.user_preferences), "");
         UserPreferences savedState = null;
         if(json.equals("")){
             savedState = initializeUserPreferences();

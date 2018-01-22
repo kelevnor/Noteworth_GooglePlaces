@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Typeface fontAwesome, openSansRegular;
     TextView navi, naviSub, search, searchSub, plus, plusSub, activity, activitySub, menu, menuSub;
 
+    TextView framefa, framewelcome;
     LinearLayout navigationLL, searchLL, plusLL, activityLL, moreLL;
 
 
@@ -69,18 +70,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main_no_map);
 
         if (Build.VERSION.SDK_INT >= 23) {
-            enableMyLocation();
-//            PermissionUtils.requestPemissions(MainActivity.this, BUNDLE_PERMISSION_REQUEST_CODE);
+            PermissionUtils.requestPemissions(MainActivity.this, BUNDLE_PERMISSION_REQUEST_CODE);
         }
 
         userPreferences = Utility.getStateFromSharedPreferences(getApplicationContext());
 
-
-
         setViews();
 
         Utility.setSelectedView(this, search, searchSub);
-
     }
 
 
@@ -117,19 +114,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Utility.unSelectView(this, menu, menuSub);
 
                 setFragment(Utility.navi_alias);
-//                mFragmentTransaction = mFragmentManager.beginTransaction();
-//                mFragmentTransaction.replace(R.id.frame, new Fragment_Navigation(), Utility.navi_alias).commit();
                 break;
 
             case R.id.ll_search:
-
                 Utility.unSelectView(this, navi, naviSub);
                 Utility.setSelectedView(this, search, searchSub);
                 Utility.unSelectView(this, activity, activitySub);
                 Utility.unSelectView(this, menu, menuSub);
                 setFragment(Utility.search_alias);
-//                mFragmentTransaction = mFragmentManager.beginTransaction();
-//                mFragmentTransaction.replace(R.id.frame, new Fragment_Search(), Utility.search_alias).commit();
                 break;
 
             case R.id.ll_plus:
@@ -138,38 +130,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.ll_activity:
 
-                searchEt.setText("");
-                Toast.makeText(this, "User Location Selected", Toast.LENGTH_SHORT).show();
-
-                Location userLocation = Utility.getUserLocation(this);
-
-                //Cannot get hold of device's Location
-                if(userLocation.getLatitude()==0.0&&userLocation.getLongitude()==0.0){
-                }
-                //Device has Location
-                else{
-
-                    Utility.preferredLatitude = userLocation.getLatitude();
-                    Utility.preferredLongitude = userLocation.getLongitude();
-
-                    //Retrieve data if internet established
-                    if(Utility.checkInternetAvailability(this)){
-                        REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
-                        places.setOnResultListener(asynResultPlaces);
-                        places.execute();
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        PermissionUtils.requestPemissions(MainActivity.this, BUNDLE_PERMISSION_REQUEST_CODE);
                     }
-                    //No Internet, inform user appropriately
+                }
+                else {
+                    searchEt.setText("");
+                    setFragment(Utility.search_alias);
+
+                    Location userLocation = Utility.getUserLocation(this);
+
+                    //Cannot get hold of device's Location
+                    if(userLocation.getLatitude()==0.0&&userLocation.getLongitude()==0.0){
+
+                    }
+                    //Device has Location
                     else{
 
+                        Utility.preferredLatitude = userLocation.getLatitude();
+                        Utility.preferredLongitude = userLocation.getLongitude();
+
+                        //Retrieve data if internet established
+                        if(Utility.checkInternetAvailability(this)){
+                            REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius(), userPreferences.getSortBy());
+                            places.setOnResultListener(asynResultPlaces);
+                            places.execute();
+                        }
+                        //No Internet, inform user appropriately
+                        else{
+
+                        }
                     }
                 }
+
                 break;
 
             case R.id.ll_more:
-//                Utility.unSelectView(this, navi, naviSub);
-//                Utility.unSelectView(this, search, searchSub);
-//                Utility.unSelectView(this, activity, activitySub);
-//                Utility.setSelectedView(this, menu, menuSub);
+
                 break;
 
             case R.id.et_search:
@@ -186,11 +184,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     // TODO: Handle the error.
                     e.printStackTrace();
                 }
-
                 break;
-
         }
-
     }
 
     @Override
@@ -200,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(resultCode == Activity.RESULT_OK){
                 //Retrieve data if internet established
                 if(Utility.checkInternetAvailability(this)){
-                    REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
+                    REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius(), userPreferences.getSortBy());
                     places.setOnResultListener(asynResultPlaces);
                     places.execute();
                 }
@@ -228,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //Retrieve data if internet established
                 if(Utility.checkInternetAvailability(this)){
-                    REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
+                    REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius(), userPreferences.getSortBy());
                     places.setOnResultListener(asynResultPlaces);
                     places.execute();
                 }
@@ -241,9 +236,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
         else if(requestCode==BUNDLE_PERMISSION_REQUEST_CODE){
-
             if(resultCode == Activity.RESULT_OK){
 
+                searchEt.setText("");
                 setFragment(Utility.search_alias);
 
                 Location userLocation = Utility.getUserLocation(this);
@@ -259,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     //Retrieve data if internet established
                     if(Utility.checkInternetAvailability(this)){
-                        REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius());
+                        REST_getGooglePlaces places = new REST_getGooglePlaces(MainActivity.this, Utility.preferredLatitude, Utility.preferredLongitude, userPreferences.getPickedRadius(), userPreferences.getSortBy());
                         places.setOnResultListener(asynResultPlaces);
                         places.execute();
                     }
@@ -298,6 +293,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         activityLL=findViewById(R.id.ll_activity);
         moreLL=findViewById(R.id.ll_more);
 
+        framefa = findViewById(R.id.tv_fa_applogo);
+        framewelcome = findViewById(R.id.tv_applogo);
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
         filter = toolbar.findViewById(R.id.tv_filter);
@@ -311,6 +308,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         activity.setTypeface(fontAwesome);
         menu.setTypeface(fontAwesome);
         searchFontIcon.setTypeface(fontAwesome);
+
+        framefa.setTypeface(fontAwesome);
+        framewelcome.setTypeface(openSansRegular);
 
         naviSub.setTypeface(openSansRegular);
         searchSub.setTypeface(openSansRegular);

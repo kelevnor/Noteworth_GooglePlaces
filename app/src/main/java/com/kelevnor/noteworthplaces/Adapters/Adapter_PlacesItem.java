@@ -58,7 +58,7 @@ public class Adapter_PlacesItem extends RecyclerView.Adapter<Adapter_PlacesItem.
         vh.textName = v.findViewById(R.id.tv_name);
         vh.textRating = v.findViewById(R.id.tv_rating);
         vh.textPrice = v.findViewById(R.id.tv_price);
-        vh.textOpenNow = v.findViewById(R.id.tv_price);
+        vh.textOpenNow = v.findViewById(R.id.tv_opennow);
 
         vh.textName.setTypeface(openSansSemiBold);
         vh.textRating.setTypeface(fontAwesome);
@@ -72,7 +72,42 @@ public class Adapter_PlacesItem extends RecyclerView.Adapter<Adapter_PlacesItem.
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.textName.setText(searchList.get(position).getName());
-        holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star));
+
+        if(searchList.get(position).getRating()!=null){
+            if(searchList.get(position).getRating()<1.0){
+                holder.textRating.setText(act.getResources().getString(R.string.fa_half_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star));
+            }
+            else if(searchList.get(position).getRating()<2.0){
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_half_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star));
+            }
+            else if(searchList.get(position).getRating()<3.0){
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_half_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star));
+            }
+            else if(searchList.get(position).getRating()<4.0){
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_half_star)+" "+act.getResources().getString(R.string.fa_empty_star));
+            }
+            else if(searchList.get(position).getRating()<5.0){
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_half_star));
+            }
+
+            if(searchList.get(position).getRating()==5.0){
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star));
+            }
+        }
+        else{
+            holder.textRating.setText("NA");
+        }
+
+        if(searchList.get(position).getOpeningHours().getOpenNow()){
+            holder.textOpenNow.setText("OPEN");
+            holder.textOpenNow.setTextColor(act.getResources().getColor(R.color.colorGreen));
+        }
+        else{
+            holder.textOpenNow.setText("CLOSED");
+            holder.textOpenNow.setTextColor(act.getResources().getColor(R.color.colorPrimary));
+        }
+
+
 
 
     }
