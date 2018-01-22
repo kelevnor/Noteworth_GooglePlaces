@@ -73,42 +73,38 @@ public class Adapter_PlacesItem extends RecyclerView.Adapter<Adapter_PlacesItem.
         // - replace the contents of the view with that element
         holder.textName.setText(searchList.get(position).getName());
 
-        if(searchList.get(position).getRating()!=null){
-            if(searchList.get(position).getRating()<1.0){
-                holder.textRating.setText(act.getResources().getString(R.string.fa_half_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star));
-            }
-            else if(searchList.get(position).getRating()<2.0){
-                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_half_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star));
-            }
-            else if(searchList.get(position).getRating()<3.0){
-                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_half_star)+" "+act.getResources().getString(R.string.fa_empty_star)+" "+act.getResources().getString(R.string.fa_empty_star));
-            }
-            else if(searchList.get(position).getRating()<4.0){
-                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_half_star)+" "+act.getResources().getString(R.string.fa_empty_star));
-            }
-            else if(searchList.get(position).getRating()<5.0){
-                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_half_star));
+        if (searchList.get(position).getRating() != null) {
+            if (searchList.get(position).getRating() < 1.0) {
+                holder.textRating.setText(act.getResources().getString(R.string.fa_half_star) + " " + act.getResources().getString(R.string.fa_empty_star) + " " + act.getResources().getString(R.string.fa_empty_star) + " " + act.getResources().getString(R.string.fa_empty_star) + " " + act.getResources().getString(R.string.fa_empty_star));
+            } else if (searchList.get(position).getRating() < 2.0) {
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_half_star) + " " + act.getResources().getString(R.string.fa_empty_star) + " " + act.getResources().getString(R.string.fa_empty_star) + " " + act.getResources().getString(R.string.fa_empty_star));
+            } else if (searchList.get(position).getRating() < 3.0) {
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_half_star) + " " + act.getResources().getString(R.string.fa_empty_star) + " " + act.getResources().getString(R.string.fa_empty_star));
+            } else if (searchList.get(position).getRating() < 4.0) {
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_half_star) + " " + act.getResources().getString(R.string.fa_empty_star));
+            } else if (searchList.get(position).getRating() < 5.0) {
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_half_star));
             }
 
-            if(searchList.get(position).getRating()==5.0){
-                holder.textRating.setText(act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star)+" "+act.getResources().getString(R.string.fa_star));
+            if (searchList.get(position).getRating() == 5.0) {
+                holder.textRating.setText(act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star) + " " + act.getResources().getString(R.string.fa_star));
             }
-        }
-        else{
+        } else {
             holder.textRating.setText("NA");
         }
 
-        if(searchList.get(position).getOpeningHours().getOpenNow()){
-            holder.textOpenNow.setText("OPEN");
-            holder.textOpenNow.setTextColor(act.getResources().getColor(R.color.colorGreen));
+        try{
+            if (searchList.get(position).getOpeningHours().getOpenNow()) {
+                holder.textOpenNow.setText("OPEN");
+                holder.textOpenNow.setTextColor(act.getResources().getColor(R.color.colorGreen));
+            } else {
+                holder.textOpenNow.setText("CLOSED");
+                holder.textOpenNow.setTextColor(act.getResources().getColor(R.color.colorPrimary));
+            }
         }
-        else{
-            holder.textOpenNow.setText("CLOSED");
-            holder.textOpenNow.setTextColor(act.getResources().getColor(R.color.colorPrimary));
+        catch (Exception e){
+            holder.textOpenNow.setText("NA");
         }
-
-
-
 
     }
 
